@@ -17,3 +17,7 @@ python -m venv venv
 
 # 1b) Activate it
 .\venv\Scripts\Activate.ps1
+
+# Commands
+-- pip install --upgrade pip
+-- pip install -r requirements.txt

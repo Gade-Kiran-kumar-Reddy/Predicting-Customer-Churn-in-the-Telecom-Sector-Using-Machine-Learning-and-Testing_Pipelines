@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException, Query,Body
 from pydantic import BaseModel
 import joblib
 import pandas as pd
-from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
