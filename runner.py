@@ -1,19 +1,17 @@
+# runner.py
 import subprocess
 import sys
 
 def main():
-    """Run tests, training, and start the FastAPI server."""
-    
 
-    # Run the main training script
+    # Run main.py
     print("🛠️  Running data preparation, training & evaluation...")
     subprocess.check_call([sys.executable, "main.py"])
 
-    # Run unit tests
-    print("🧪  Running pytest suite...")
+    # Run tests
     subprocess.check_call([sys.executable, "-m", "pytest", "-q"])
 
-    # Start the FastAPI server via uvicorn
+    # Starts FastAPI
     print("🚀  Starting FastAPI server...")
     subprocess.check_call([
         sys.executable, "-m", "uvicorn",
