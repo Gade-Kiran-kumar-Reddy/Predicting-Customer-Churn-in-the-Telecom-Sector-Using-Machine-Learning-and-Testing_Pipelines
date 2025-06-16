@@ -66,7 +66,7 @@ def _make_prediction(data: pd.DataFrame):
     prob = model.predict_proba(df_enc)[0, 1]
     return {"churn_prediction": int(pred), "churn_probability": float(prob)}
 
-# 2) JSON body endpoint
+# JSON body endpoint
 @app.post(
     "/predict/json",
     summary="Predict churn via JSON body",
@@ -101,7 +101,7 @@ def predict_json(
     df = pd.DataFrame([payload.dict()])
     return _make_prediction(df)
 
-# 3) Query parameter endpoint
+# Query parameter endpoint
 @app.get(
     "/predict/query",
     summary="Predict churn via query parameters",
