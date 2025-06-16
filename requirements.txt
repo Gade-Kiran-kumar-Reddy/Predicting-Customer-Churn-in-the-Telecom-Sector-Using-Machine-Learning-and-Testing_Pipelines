@@ -7,3 +7,5 @@ fastapi
 uvicorn
 seaborn
 matplotlib
+gradio
+requests
