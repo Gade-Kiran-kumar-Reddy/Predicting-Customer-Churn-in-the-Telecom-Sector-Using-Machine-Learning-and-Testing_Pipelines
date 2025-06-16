@@ -21,3 +21,6 @@ python -m venv venv
 # Commands
 -- pip install --upgrade pip
 -- pip install -r requirements.txt
+-- pip install pytest
+--python -m pytest tests/test_pipeline.py
+--python runner.py
