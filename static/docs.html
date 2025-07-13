@@ -1,24 +1,40 @@
-<!-- static/docs.html -->
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Telecom Churn API Docs</title>
-    <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+    <meta charset="utf-8"/>
+    <title>Telecom Churn API Docs — Stoplight Elements</title>
     <style>
-      body { margin:0; }
-      rapidoc { width:100%; height:100vh; }
+      body { margin: 0; }
+      elements-api { height: 100vh; display: block; }
     </style>
+
+    <!-- Stoplight Elements CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@stoplight/elements/styles.min.css"
+    />
   </head>
   <body>
-    <rapi-doc  
-      spec-url="/openapi.json"
-      render-style="focused"
-      allow-spec-url-load
-      allow-server-selection
-      allow-try
-      show-header="false"
-      theme="light"
-    ></rapi-doc>
+    <!--
+      layout="sidebar" for two‐panel with nav,
+      show-try-it="true" enables the Try button,
+      show-examples="true" turns on the Examples panel,
+      example="typical_customer" tells it which named example to pre‐load
+    -->
+    <elements-api
+      apiDescriptionUrl="/openapi.json"
+      layout="sidebar"
+      router="hash"
+      show-try-it="true"
+      show-examples="true"
+      example="typical_customer"
+    ></elements-api>
+
+    <!-- Stoplight Elements bundle -->
+    <script type="module">
+      import { applyTheme } from 'https://unpkg.com/@stoplight/elements/themes/modern.js';
+      applyTheme();
+    </script>
+    <script type="module" src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
   </body>
 </html>

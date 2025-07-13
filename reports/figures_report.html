@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>Model Figures Report</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; margin: 0; padding: 0; background: #f9f9f9; }
+    .container { max-width: 960px; margin: auto; padding: 20px; background: #fff; }
+    h1 { text-align: center; margin-bottom: 1rem; background: #0366d6; color: #fff; padding: 10px; }
+    nav ul { list-style: none; padding: 0; text-align: center; margin-bottom: 20px; background: #eaecef; padding: 10px; border-radius: 5px; }
+    nav li { display: inline-block; margin: 0 10px; }
+    nav a { text-decoration: none; color: #0366d6; font-weight: bold; }
+    .figure-grid { display: grid; grid-template-columns: 1fr; gap: 40px; justify-items: center; }
+    @media(min-width:600px) { .figure-grid { grid-template-columns: 1fr 1fr; } }
+    figure { margin: 0; text-align: center; }
+    figure img { width: 100%; height: auto; border: 1px solid #ccc; border-radius: 4px; }
+    figcaption { margin-top: 8px; font-style: italic; color: #555; font-size: 0.9rem; }
+    hr { border: none; border-top: 1px solid #eaeaea; margin: 40px 0; }
+  </style>
+</head>
+<body>
+  <div class='container'>
+    <h1>Model Figures Report</h1>
+    <nav><ul>
+      <li><a href='#churn-distribution'>Churn Distribution</a></li>
+      <li><a href='#confusion-matrix'>Confusion Matrix</a></li>
+      <li><a href='#contract-vs-churn'>Contract Vs Churn</a></li>
+      <li><a href='#feature-correlation-heatmap'>Feature Correlation Heatmap</a></li>
+      <li><a href='#model-comparison'>Model Comparison</a></li>
+      <li><a href='#monthly-charges-vs-churn'>Monthly Charges Vs Churn</a></li>
+      <li><a href='#pairplot'>Pairplot</a></li>
+      <li><a href='#roc-curve'>Roc Curve</a></li>
+      <li><a href='#tenure-distribution'>Tenure Distribution</a></li>
+    </ul></nav>
+    <div class='figure-grid'>
+      <figure id='churn-distribution'>
+        <img src='figures\churn_distribution.png' alt='churn_distribution.png'>
+        <figcaption><strong>Distribution of customers by churn status, showing ~26% churn rate.</strong></figcaption>
+      </figure>
+      <hr>
+      <figure id='confusion-matrix'>
+        <img src='figures\confusion_matrix.png' alt='confusion_matrix.png'>
+        <figcaption><strong>Confusion matrix on hold-out set: True vs. predicted churn labels.</strong></figcaption>
+      </figure>
+      <hr>
+      <figure id='contract-vs-churn'>
+        <img src='figures\contract_vs_churn.png' alt='contract_vs_churn.png'>
+        <figcaption><strong>Churn rate by contract type (Month-to-month, One-year, Two-year).</strong></figcaption>
+      </figure>
+      <hr>
+      <figure id='feature-correlation-heatmap'>
+        <img src='figures\feature_correlation_heatmap.png' alt='feature_correlation_heatmap.png'>
+        <figcaption><strong>Heatmap of feature correlations after preprocessing.</strong></figcaption>
+      </figure>
+      <hr>
+      <figure id='model-comparison'>
+        <img src='figures\model_comparison.png' alt='model_comparison.png'>
+        <figcaption><strong>Accuracy comparison across RF, XGB, and Logistic models.</strong></figcaption>
+      </figure>
+      <hr>
+      <figure id='monthly-charges-vs-churn'>
+        <img src='figures\monthly_charges_vs_churn.png' alt='monthly_charges_vs_churn.png'>
+      </figure>
+      <hr>
+      <figure id='pairplot'>
+        <img src='figures\pairplot.png' alt='pairplot.png'>
+      </figure>
+      <hr>
+      <figure id='roc-curve'>
+        <img src='figures\roc_curve.png' alt='roc_curve.png'>
+        <figcaption><strong>ROC curve for the best calibrated model on test data.</strong></figcaption>
+      </figure>
+      <hr>
+      <figure id='tenure-distribution'>
+        <img src='figures\tenure_distribution.png' alt='tenure_distribution.png'>
+      </figure>
+      <hr>
+    </div>
+  </div>
+</body>
+</html>
