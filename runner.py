@@ -11,6 +11,9 @@ def main():
     # Run tests
     subprocess.check_call([sys.executable, "-m", "pytest", "-q"])
 
+    # Generating report
+    subprocess.check_call([sys.executable, "generate_report.py"])
+
     # Starts FastAPI
     print("🚀  Starting FastAPI server...")
     subprocess.check_call([
