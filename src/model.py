@@ -10,10 +10,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 
-# dir for plots
 FIG_DIR = 'reports/figures'
-# ensure figures folder exists
 os.makedirs(FIG_DIR, exist_ok=True)
+
 
 def train_and_save_best_model(df, model_path, feat_path, out_dir="deployment"):
     # ensure output directory exists
@@ -21,22 +20,36 @@ def train_and_save_best_model(df, model_path, feat_path, out_dir="deployment"):
 
     # split features / target
     X = df.drop('Churn', axis=1)
-    y = df['Churn'].map({'Yes':1,'No':0}) if df['Churn'].dtype == object else df['Churn']
+    y = df['Churn'].map({'Yes': 1, 'No': 0}) if df['Churn'].dtype == object else df['Churn']
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, stratify=y, random_state=42
     )
 
-    # save feature columns
+    # save feature columns (kept for backward-compat with your API; consider serializing the full pipeline only)
     joblib.dump(X.columns.tolist(), feat_path)
 
     # common preprocessing
     imputer = SimpleImputer(strategy='median')
 
-    # define candidate models
+    # define candidate models (single-threaded to avoid Windows multiprocessing crash / nested parallelism)
     candidates = {
-        'RandomForest': RandomForestClassifier(n_estimators=100, random_state=42),
-        'XGBoost': XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42),
-        'LogisticRegression': LogisticRegression(max_iter=1000, solver='lbfgs', random_state=42)
+        'RandomForest': RandomForestClassifier(
+            n_estimators=100,
+            random_state=42,
+            n_jobs=1  # ⬅️ important on Windows
+        ),
+        'XGBoost': XGBClassifier(
+            use_label_encoder=False,
+            eval_metric='logloss',
+            random_state=42,
+            n_jobs=1  # ⬅️ important on Windows
+        ),
+        'LogisticRegression': LogisticRegression(
+            max_iter=1000,
+            solver='lbfgs',
+            random_state=42
+            # (LogReg doesn't use n_jobs in lbfgs)
+        )
     }
 
     # hyperparameter spaces for optimization
@@ -77,8 +90,9 @@ def train_and_save_best_model(df, model_path, feat_path, out_dir="deployment"):
             n_iter=5,
             cv=3,
             scoring='accuracy',
-            n_jobs=-1,
-            random_state=42
+            n_jobs=1,        # ⬅️ Windows-safe: avoid joblib/loky multiprocessing
+            random_state=42,
+            verbose=1
         )
         rs.fit(X_train, y_train)
         opt_acc = rs.best_estimator_.score(X_test, y_test)
@@ -108,17 +122,17 @@ def train_and_save_best_model(df, model_path, feat_path, out_dir="deployment"):
     labels = df_results['model']
     x = np.arange(len(labels))
     width = 0.35
-    fig, ax = plt.subplots(figsize=(8,6))
-    ax.bar(x - width/2, df_results['base_accuracy'], width, label='Baseline')
-    ax.bar(x + width/2, df_results['opt_accuracy'], width, label='Optimized')
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.bar(x - width / 2, df_results['base_accuracy'], width, label='Baseline')
+    ax.bar(x + width / 2, df_results['opt_accuracy'], width, label='Optimized')
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
     ax.set_ylabel('Accuracy')
     ax.set_title('Model Accuracy: Baseline vs Optimized')
     ax.legend()
     for i, (b, o) in enumerate(zip(df_results['base_accuracy'], df_results['opt_accuracy'])):
-        ax.text(i - width/2, b + 0.01, f"{b:.2f}", ha='center')
-        ax.text(i + width/2, o + 0.01, f"{o:.2f}", ha='center')
+        ax.text(i - width / 2, b + 0.01, f"{b:.2f}", ha='center')
+        ax.text(i + width / 2, o + 0.01, f"{o:.2f}", ha='center')
     plt.tight_layout()
     plot_path = os.path.join(FIG_DIR, 'model_comparison.png')
     fig.savefig(plot_path, dpi=300)
