@@ -29,3 +29,25 @@ This dataset is available under a CC0 (Public Domain) license. This means it's f
 
 Additionally, my own code and work will be shared under an MIT License in the repository. This will allow others to freely use, modify, and build on the project while still crediting the original author.
 
+## Structure
+- data/raw/: Place your dataset CSV here.
+- notebooks/: Jupyter notebooks for exploration.
+- src/: Source modules (`data_loader`, `preprocess`, `model`, `evaluate`, `eda`).
+- reports/figures/: Automatically saved plots.
+- tests/: pytest unit tests.
+- deployment/: FastAPI application.
+- requirements.txt: Python dependencies.
+- main.py: Entry point to run EDA, train, evaluate, and save model.
+# 1a) Create venv (only once)
+python -m venv venv
+
+# 1b) Activate it
+.\venv\Scripts\Activate.ps1
+
+# Commands
+-- pip install --upgrade pip
+-- pip install -r requirements.txt
+-- pip install pytest
+--python -m pytest tests/test_pipeline.py
+--python runner.py
+
